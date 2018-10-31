@@ -211,7 +211,7 @@
   </template>
 
 
-  <template id="tab4.html">
+  <template id="detail.html">
       <ons-page>
           <script>
           var datadep = localStorage.getItem('detail');
@@ -408,7 +408,7 @@
   //detail
   function detail(pid) {
     localStorage.setItem('id', pid);
-    myNavigator.pushPage('tab4.html')
+    myNavigator.pushPage('detail.html')
     showdetail()
    
   }
