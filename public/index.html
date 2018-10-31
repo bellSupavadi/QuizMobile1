@@ -62,7 +62,7 @@
       <ons-tabbar swipeable position="auto" id="tabbar">
         <ons-tab page="tab1.html" label="Home" icon="ion-home, material:md-home" >
         </ons-tab>
-        <ons-tab page="tab2.html" label="Cart" icon="md-shopping-cart" active-icon="md-shopping-cart" badge="7" active>
+        <ons-tab page="tab2.html" label="Cart" icon="md-shopping-cart" active-icon="md-shopping-cart" >
         </ons-tab>
         <ons-tab page="tab3.html" label="product" icon="md-shopping-cart" active-icon="md-shopping-cart">
         </ons-tab>
@@ -266,7 +266,55 @@
 
 
   <template id="tab4.html">
-    <ons-page>
+      <ons-page>
+          <script>
+          var datadep = localStorage.getItem('detail');
+          console.log(datadep)
+          </script>
+            <ons-toolbar>
+                <div class="left"><ons-back-button>Back</ons-back-button></div>
+                <div class="center">Detail</div>
+            </ons-toolbar>
+    
+           <div id="detail"></div>
+          
+           <script id="detail_template" type="text/template">
+              <ons-card>
+                  <ons-carousel swipeable auto-scroll overscrollable id="carousel" style="height: 300px;">
+                    
+                        <ons-carousel-item id="carousel1DeP" style="background: url('images/1.jpg') no-repeat center; background-size: contain;">
+                        </ons-carousel-item>
+                        <ons-carousel-item id="carousel2DeP" style="background: url('images/2.jpg') no-repeat center; background-size: contain;">
+                        </ons-carousel-item>
+                        <ons-carousel-item id="carousel3DeP" style="background: url('images/3.jpg') no-repeat center; background-size: contain;">
+                        </ons-carousel-item>
+          
+                 </ons-carousel>
+                 <% detail.forEach(function(data){   
+                  var data = data.data(); %>
+                  
+                  <div class="title">
+
+                    <%= data.price%>
+                  </div>
+                  <div class="content">
+                    <div>
+                      <%= data.title %>
+                    </div>
+                    <ons-list>
+                      <ons-list-header>Bindings</ons-list-header>
+                      <ons-list-item>Vue</ons-list-item>
+                      <ons-list-item>Angular</ons-list-item>
+                      <ons-list-item>React</ons-list-item>
+                    </ons-list>
+                  </div>
+                  <%})%>
+                </ons-card>
+                
+           </script>
+    
+        </ons-page>
+    <!-- <ons-page>
       <ons-toolbar>
         <div class="left">
           <ons-back-button>Page 1</ons-back-button>
@@ -299,7 +347,7 @@
      
     
     </Script>
-    </ons-page>
+    </ons-page> -->
   </template>
 
 
@@ -370,17 +418,7 @@
     }).catch(function (error) {
       console.log("Error getting document:", error);
     });
-    // $.getJSON('home.json', function (data) {
-    //     console.log(data);
-    //    
-    //     var style = "background: url('" + data.slides[0] + "')no-repeat center;background-size: contain;";
-    //     $('#carousel1').attr('style', style);
-    //     $('#icon1').attr('icon', data.categories[0].icon);
-    //     $('#Category_1_name').html(data.categories[0].name);
-    //     var icon_template = $('#icon_template').html();
-    //     var html = ejs.render(icon_template, { categories: data.categories });
-    //     $('#icon').html(html);
-    // });
+   
   }
   function getCartData() {
     var docRef = db.collection("UI").doc("cart");
@@ -388,8 +426,6 @@
       if (doc.exists) {
         console.log("Document data:", doc.data());
         var data = doc.data();
-        // $('#photo').html(data.cart[0].photo);
-        // $('#price').html(data.cart[0].price); 
         var pic_template = $('#pic_template').html();
         var html = ejs.render(pic_template, { cart: data.cart });
         $('#pic').html(html);
@@ -400,9 +436,7 @@
     }).catch(function (error) {
       console.log("Error getting document:", error);
     });
-    // $.getJSON('cart.json', function (data) {
-    //     console.log(data);
-    // })
+    
   }
   function getproductData(name) {
     console.log(name);
@@ -447,11 +481,7 @@
                 console.log("Error getting documents: ", error);
               });
           }
-          // doc.data() is never undefined for query doc snapshots
-          // var product_template = $('#product_template').html();
-          // console.log(querySnapshot.docs);
-          // var html = ejs.render(product_template, { product: querySnapshot.docs });
-          // $('#product').html(html);
+         
         })
     }
   }
@@ -459,17 +489,15 @@
     console.log(name)
     document.getElementById('tabbar').setActiveTab(2);
     localStorage.setItem('name', name);
-    // var name1 = localStorage.getItem('name');
-    //  getproductData(name1)
+  
   }
   function detail(pid) {
     localStorage.setItem('id', pid);
     myNavigator.pushPage('tab4.html')
     showdetail()
-    // var name1 = localStorage.getItem('name');
-    //  getproductData(name1)
+   
   }
-  function showdetail() {
+  function showdetail() { 
     var id = localStorage.getItem('id');
     db.collection("PRODUCTS").where("pid", "==", id).get()
       .then(function (querySnapshot) {
@@ -491,12 +519,12 @@
     let query = needle.toLowerCase();
     return heystack.filter(item => item.data().title.toLowerCase().indexOf(needle) >= 0);
   }
-  console.log("55+", filterItems(search, data));
+  // console.log("55+", filterItems(search, data));
   var item=filterItems(search, data);
-  console.log("xxx",item)
+  // console.log("xxx",item)
   localStorage.setItem('items', item);
   
-  console.log('tong',item);
+  // console.log('tong',item);
 test(item);
 document.getElementById('tabbar').setActiveTab(2);
     // localStorage.setItem('title', item);
@@ -519,7 +547,7 @@ function addtocart(add2cart){
   localStorage.clear('quentinTarantino');
 localStorage.setItem('quentinTarantino',add2cart);
 var retrievedData = localStorage.getItem("quentinTarantino");
-console.log(retrievedData);
+// console.log(retrievedData);
 dataCart.push(retrievedData);
 alert(dataCart);
 }
@@ -535,20 +563,6 @@ console.log("888",title);
         var product_template = $('#product_template').html();
          var html = ejs.render(product_template, { product: title });
         $('#product').html(html);
-  
-// console.log(tests)
-// db.collection("PRODUCTS").where("title", "==",tests).get()
-//       .then(function (querySnapshot) {
-//         // doc.data() is never undefined for query doc snapshots
-//         console.log(querySnapshot.docs);
-//         var test_template = $('#test_template').html();
-//         var html = ejs.render(test_template, { test: querySnapshot.docs });
-//         $('#test').html(html);
-//       })
-//       .catch(function (error) {
-//         console.log("Error getting documents: ", error);
-//       });
-// }}
  }
  var dataCart = [];
 function addtocart(add2cart){
@@ -564,15 +578,7 @@ alert(dataCart);
 
 function getData2cart(){
   
-  var Delete=[]
-  document.getElementById('pic').innerHTML=""
-  console.log(dataCart);
-  var j=0
-  dataCart.forEach(function(remove) {
-    Delete.push(j)
-    console.log(Delete)
-    j++
-  });
+  
 var testnum = 0;
   dataCart.forEach(function(dataCart){
     var apr = db.collection("PRODUCTS").where("pid","==",dataCart);
