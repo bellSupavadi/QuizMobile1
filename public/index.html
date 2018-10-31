@@ -100,10 +100,10 @@
                         <% categories.forEach(function(category){%>
                     <ons-col modifier="nodivider" id="  " onclick="changeTab('<%= category.name %>')"width="33%"value="<%= category.name %>">
                         <div class="category_wrapper">
-                            <figure class="category_thumbnail">
+                            <figure class="category_thumbnail"> 
                                 <ons-icon id="icon1" icon="<%= category.icon %>"></ons-icon>
                                 <div class="category_title" id="Category_1_name"> <%= category.name %> </div>
-                            </figure>
+                             </figure> 
                         </div>
                     </ons-col>
 
@@ -116,48 +116,6 @@
       </div>
 
       <style type="text/css">
-        .recomended_playlist {
-          padding-left: 10px;
-        }
-        .recomended_playlist_title {
-          font-size: 12px;
-          font-weight: bold;
-        }
-        .thumbnail {
-          width: 120px;
-          height: 120px;
-          display: table;
-          background-color: rgba(0, 0, 0, 0.42);
-        }
-        .thumbnail ons-icon {
-          font-size: 70px;
-          color: rgba(190, 190, 190, 0.74);
-          display: table-cell;
-          vertical-align: middle !important;
-        }
-        .recomended_list {
-          height: 150px;
-        }
-        .recomended {
-          background: linear-gradient(rgb(208, 247, 211), #151715);
-          padding-top: 44px;
-        }
-        .menu_list {
-          background: transparent;
-        }
-        .menu_item {
-          color: white;
-          font-size: 12px;
-        }
-        .menu_item ons-icon {
-          margin-right: 10px;
-          color: white;
-          font-size: 16px;
-        }
-        .category {
-          margin: 20px 0px;
-          padding: 0px 30px;
-        }
         .category_wrapper {
           width: 90%;
           margin: auto;
@@ -170,35 +128,12 @@
           padding-top: 10px;
           line-height: 0.75em;
         }
-        .category_wrapper1 {
-          width: 90%;
-          margin: auto;
-          background-color: rgba(100, 100, 100, 0.747);
-        }
-        .category_wrapper1 ons-icon {
-          font-size: 55px;
-          padding-top: 10px;
-          line-height: 0.75em;
-        }
-        .category_wrapper2 {
-          width: 90%;
-          margin: auto;
-          background-color: rgba(65, 65, 65, 0.815);
-        }
-        .category_wrapper2 ons-icon {
-          font-size: 55px;
-          padding-top: 10px;
-          line-height: 0.75em;
-        }
+        
         .category_thumbnail {
           display: inline-block;
           margin: 16px 0px;
         }
-        .category_title {
-          font-size: 12px;
-          font-weight: bold;
-          padding-top: 10px;
-        }
+       
       </style>
     </ons-page>
   </template>
@@ -207,14 +142,15 @@
     <ons-page id="Tab2">
       <ons-list-header>SHOPPING CART</ons-list-header>
 
-      <div id="pic"></div>
-        <script id="pic_template" type="text/template"> 
+      <div id="bucket"></div>
+        <script id="bucket_template" type="text/template"> 
                     <% cart.forEach(function(cart){
                       var cart=cart.data()
                       %>
             <ons-list-item>
                 <div class="left">
                     <img class="list-item__thumbnail" src="<%= cart.photo %>">
+                  
                 </div>
                 <div class="center">
                     <span class="list-item__title"><%= cart.itemname %></span>
@@ -222,7 +158,18 @@
                 </div>
                 <div class="right">
 
-                    <ons-icon icon="md-delete"></ons-icon>
+                    <ons-button  icon="md-delete" onclick="alertDialog()"></ons-button>
+                    <template id="alert-dialog.html">
+                        <ons-alert-dialog id="my-alert-dialog" modifier="rowfooter">
+                          <div class="alert-dialog-title">Alert</div>
+                          <div class="alert-dialog-content">
+                            This dialog was created from a template
+                          </div>
+                          <div class="alert-dialog-footer">
+                            <ons-alert-dialog-button onclick="hideAlertDialog()">OK</ons-alert-dialog-button>
+                          </div>
+                        </ons-alert-dialog>
+                      </template>
 
                     
             </ons-list-item><%});%> 
@@ -308,46 +255,14 @@
                       <ons-list-item>React</ons-list-item>
                     </ons-list>
                   </div>
+                  <ons-button onclick="addtocart('<%= data.pid %>');totalprice('<%= data.price%>')">ADD TO CART</ons-button>
                   <%})%>
                 </ons-card>
                 
            </script>
     
         </ons-page>
-    <!-- <ons-page>
-      <ons-toolbar>
-        <div class="left">
-          <ons-back-button>Page 1</ons-back-button>
-        </div>
-        <div class="center"></div>
-      </ons-toolbar>
-      <div id="detail"></div>
-      <script id="detail_template" type="text/template"> 
-        <ons-card>
-         
-         <% detail.forEach(function(data){   
-          var data = data.data(); %>
-          <div class="title">
-            <%= data.price%>
-          </div>
-          <div class="content">
-            <div>
-              <%= data.title %>
-            </div>
-            <ons-list>
-              <ons-list-header>Bindings</ons-list-header>
-              <ons-list-item>Vue</ons-list-item>
-              <ons-list-item>Angular</ons-list-item>
-              <ons-list-item>React</ons-list-item>
-            </ons-list>
-          </div>
-          <ons-button onclick="addtocart('<%= data.pid %>')">ADD TO CART</ons-button>
-          <%})%>
-        </ons-card>
-     
     
-    </Script>
-    </ons-page> -->
   </template>
 
 
@@ -381,7 +296,7 @@
       getData2cart()
     }
     else if (event.index == 2) {
-      console.log('Cart click');
+      console.log('product click');
       var name = localStorage.getItem('name');
       var items = localStorage.getItem('items');
       if (name == null&&items==null) {
@@ -391,12 +306,12 @@
       else if (name != null&&items==null){  }
     }else if (event.index == 3) {
       var title = localStorage.getItem('title');
-      console.log('Cart click');
-      // test(title)
+      console.log('detail click');
+      
     }localStorage.clear();
   });
  
- 
+ //homeData
   function getHomeData() {
     var docRef = db.collection("UI").doc("home");
     docRef.get().then(function (doc) {
@@ -420,15 +335,16 @@
     });
    
   }
+  //cartdata
   function getCartData() {
     var docRef = db.collection("UI").doc("cart");
     docRef.get().then(function (doc) {
       if (doc.exists) {
         console.log("Document data:", doc.data());
         var data = doc.data();
-        var pic_template = $('#pic_template').html();
-        var html = ejs.render(pic_template, { cart: data.cart });
-        $('#pic').html(html);
+        var bucket_template = $('#bucket_template').html();
+        var html = ejs.render(bucket_template, { cart: data.cart });
+        $('#bucket').html(html);
       } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");
@@ -438,12 +354,13 @@
     });
     
   }
+
+  //productdata
   function getproductData(name) {
     console.log(name);
     if (name == null) {
       db.collection("PRODUCTS").get()
         .then(function (querySnapshot) {
-          // doc.data() is never undefined for query doc snapshots
           var product_template = $('#product_template').html();
           console.log(querySnapshot.docs);
           var html = ejs.render(product_template, { product: querySnapshot.docs });
@@ -456,13 +373,12 @@
       db.collection("PRODUCTS").where("category", "==",name).get()
         .then(function (querySnapshot) {console.log(querySnapshot.docs);
           if (querySnapshot.docs.length == 0) {
-            var html = "ไม่มีสินค้าที่คุณเลือก"
+            var html = "No items in the list."
             db.collection("PRODUCTS").get()
               .then(function (querySnapshot) {
-                // doc.data() is never undefined for query doc snapshots
-                var product_template = $('#product_template').html();
+                 var product_template = $('#product_template').html();
                 console.log(querySnapshot.docs);
-                html += ejs.render(product_template, { product: querySnapshot.docs });
+                html = ejs.render(html, { product: querySnapshot.docs });
                 $('#product').html(html);
               })
               .catch(function (error) {
@@ -549,7 +465,10 @@ localStorage.setItem('quentinTarantino',add2cart);
 var retrievedData = localStorage.getItem("quentinTarantino");
 // console.log(retrievedData);
 dataCart.push(retrievedData);
-alert(dataCart);
+ons.notification.toast('Add "' + retrievedData + '" To Cart Success !!!', { timeout: 2000 });
+// alert(dataCart);
+$('.alertcart').attr('badge', dataCart.length);
+
 }
 
 function test(title){
@@ -564,17 +483,16 @@ console.log("888",title);
          var html = ejs.render(product_template, { product: title });
         $('#product').html(html);
  }
- var dataCart = [];
-function addtocart(add2cart){
-  localStorage.clear('quentinTarantino');
-localStorage.setItem('quentinTarantino',add2cart);
-var retrievedData = localStorage.getItem("quentinTarantino");
-console.log(retrievedData);
-dataCart.push(retrievedData);
+//  var dataCart = [];
+// function addtocart(add2cart){
+//   localStorage.clear('quentinTarantino');
+// localStorage.setItem('quentinTarantino',add2cart);
+// var retrievedData = localStorage.getItem("quentinTarantino");
+// console.log(retrievedData);
+// dataCart.push(retrievedData);
 
-alert(dataCart);
-}
-//????????? array ??????????????? firebase ?????????????????? template
+// }
+
 
 function getData2cart(){
   
@@ -584,18 +502,49 @@ var testnum = 0;
     var apr = db.collection("PRODUCTS").where("pid","==",dataCart);
     apr.get().then(function (querySnapshot) {
       console.log(querySnapshot.docs)
-      var pic_template = $('#pic_template').html();
-      var  html = ejs.render(pic_template, { cart: querySnapshot.docs,num:testnum });
+      var bucket_template = $('#bucket_template').html();
+      var  html = ejs.render(bucket_template, { cart: querySnapshot.docs,num:testnum });
       console.log(html);
-
-     
-      
-     $('#pic').append(html);
+     $('#bucket').append(html);
         testnum = testnum +1;
     })  
   })
  
 }
+
+function deletProduct(pro) {
+  console.log(pro);
+  console.log(dataCart);
+  var hideAlertDialog = function() {
+  document
+    .getElementById('my-alert-dialog')
+    .hide();
+};
+
+var alertDialog = function() {
+  document = function() {
+  ons.notification.alert('This dialog was created with ons.notification');
+};
+  var remove= dataCart.splice(pro,1)
+  
+  getData2cart()
+}}
+
+
+var priceitem = 0;
+  function totalprice(price1) {
+    var price1 = parseInt(price1, 10)
+    console.log(price1);
+    priceitem = priceitem + price1;
+    $('#showprice').html("<p><b>&nbsp; Total Price is : </b>" + priceitem + " ฿</p>");
+  }
+
+  function delprice(price2) {
+    var price2 = parseInt(price2, 10)
+    console.log(price2);
+    priceitem = priceitem - price2;
+    $('#showprice').html("<p><b>&nbsp; Total Price is : </b>" + priceitem + " ฿</p>");
+  }
 </script>
 
 </html>
