@@ -19,21 +19,21 @@
   <script>
     // Initialize Firebase
     var config = {
-      apiKey: "AIzaSyA-4_5rHvcMOh3iY4PttN4l29iGXRDiFPI",
-      authDomain: "shopee-8710c.firebaseapp.com",
-      databaseURL: "https://shopee-77a26.firebaseio.com",
-      projectId: "shopee-77a26",
-      storageBucket: "shopee-77a26.appspot.com",
-      messagingSenderId: "708925055871"
+        apiKey: "AIzaSyA-4_5rHvcMOh3iY4PttN4l29iGXRDiFPI",
+        authDomain: "shopee-8710c.firebaseapp.com",
+        databaseURL: "https://shopee-77a26.firebaseio.com",
+        projectId: "shopee-77a26",
+        storageBucket: "shopee-77a26.appspot.com",
+        messagingSenderId: "708925055871"
     };
     firebase.initializeApp(config);
     // Initialize Cloud Firestore through Firebase
     var db = firebase.firestore();
     // Disable deprecated features
     db.settings({
-      timestampsInSnapshots: true
+        timestampsInSnapshots: true
     });
-  </script>
+</script>
   <title>Document</title>
 
 
@@ -60,9 +60,9 @@
       </ons-toolbar>
 
       <ons-tabbar swipeable position="auto" id="tabbar">
-        <ons-tab page="tab1.html" label="Home" icon="ion-home, material:md-home" badge="7" active>
+        <ons-tab page="tab1.html" label="Home" icon="ion-home, material:md-home" >
         </ons-tab>
-        <ons-tab page="tab2.html" label="Cart" icon="md-shopping-cart" active-icon="md-shopping-cart">
+        <ons-tab page="tab2.html" label="Cart" icon="md-shopping-cart" active-icon="md-shopping-cart" badge="7" active>
         </ons-tab>
         <ons-tab page="tab3.html" label="product" icon="md-shopping-cart" active-icon="md-shopping-cart">
         </ons-tab>
@@ -321,6 +321,32 @@
     });
   });</script>
 <script>
+  getHomeData()
+  tatol();
+  document.addEventListener('prechange', function (event) {
+    if (event.index == 0) {
+      console.log('Home click');
+      getHomeData()
+    }
+    else if (event.index == 1) {
+      console.log('Cart click');
+      getData2cart()
+    }
+    else if (event.index == 2) {
+      console.log('Cart click');
+      var name = localStorage.getItem('name');
+      var items = localStorage.getItem('items');
+      if (name == null&&items==null) {
+        getproductData()
+      }
+      else if (name != null&&items==null){ getproductData(name) }
+      else if (name != null&&items==null){  }
+    }else if (event.index == 3) {
+      var title = localStorage.getItem('title');
+      console.log('Cart click');
+      // test(title)
+    }localStorage.clear();
+  });
  
  
   function getHomeData() {
